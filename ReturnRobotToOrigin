@@ -1,0 +1,33 @@
+class Solution {
+    public boolean judgeCircle(String moves) {
+        
+        char[] moveArr = moves.toCharArray();
+        int[] endPos = moveBot(moveArr);
+        int[] o = {0,0};
+        
+        if(Arrays.equals(endPos,o))
+            return true;
+        
+        return false;
+        
+    }
+    
+    private int[] moveBot(char[] cArr){
+        int[] pos = {0,0};
+        for(char c: cArr){
+            if(c == 'U'){
+                pos[1]++;
+            }
+            else if(c == 'D'){
+                pos[1]--;
+            }
+            else if(c == 'L'){
+                pos[0]--;
+            }
+            else if(c == 'R'){
+                pos[0]++;
+            }
+        }
+        return pos;
+    }
+}
