@@ -1,0 +1,32 @@
+/*
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+You can return the answer in any order.
+*/
+
+import java.util.HashMap;
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+
+        int[] solution = new int[2];
+        
+        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+        
+        for(int i = 0; i < nums.length; i++){
+            map.put(nums[i],i); //store each element in map. key is the actual number, value is index.
+        }
+        
+        for(int i = 0; i < nums.length; i++){
+            
+            if(map.containsKey(target-nums[i])){
+                solution[0] = i;
+                solution[1] = map.get(target-nums[i]);
+                if(solution[0] != solution[1]) //Ensure we aren't accessing the same element twice
+                    break;
+            }
+        }
+        return solution;
+    }
+}
