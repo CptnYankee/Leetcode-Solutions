@@ -1,0 +1,24 @@
+Implement pow(x, n), which calculates x raised to the power n (i.e., xn).
+
+class Solution {
+    public double myPow(double x, int n) {
+        //return Math.pow(x,n); //lol
+        double output = 0.0;
+        //split operation depending on sign of n
+        if(n < 0){
+            output = 1/powPow(x,Math.abs(n));
+        }else{
+            output = powPow(x,n);
+        }
+        return output;
+    }
+    private double powPow(double x, int n){
+        if(n == 0)
+            return 1.0;
+        double result = powPow(x,n/2);
+        if(n%2!=0)
+            return x*result*result;
+
+        return result*result;
+    }
+}
