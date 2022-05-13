@@ -1,0 +1,98 @@
+/********************************************************************************************
+You are given two non-empty linked lists representing two non-negative integers. 
+The digits are stored in reverse order, and each of their nodes contains a single digit. 
+Add the two numbers and return the sum as a linked list.
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+Constraints:
+
+The number of nodes in each linked list is in the range [1, 100].
+0 <= Node.val <= 9
+It is guaranteed that the list represents a number that does not have leading zeros.
+*********************************************************************************************/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode currNode1 = l1;
+        ListNode currNode2 = l2;
+        ListNode newListRoot = new ListNode();
+        ListNode newNode = newListRoot;
+        
+        int length1 = count(l1);
+        int length2 = count(l2);
+        int longer = Integer.compare(length1, length2);
+        int endLength = 0;
+        if(longer > 0)
+            endLength = length2;
+        else
+            endLength = length1;
+        
+        //System.out.println(length1);
+        //System.out.println(length2);
+        
+        int overSum = 0;
+        int count = 0;
+        int nodeVal = 0;
+        
+        
+        
+        while(count < endLength){
+            nodeVal = currNode1.val + currNode2.val + overSum;
+            if(overSum > 0)
+                overSum = 0;
+            if(nodeVal >=10){
+                nodeVal %= 10;
+                overSum++;
+            }
+            newNode.val = nodeVal;
+            if(currNode1.next != null && currNode2.next != null){
+                newNode.next = new ListNode();
+                newNode = newNode.next;
+            }
+            currNode1 = currNode1.next;
+            currNode2 = currNode2.next;
+            count++;
+        }
+        ListNode continueNode = null;
+        if(longer > 0){
+            newNode.next = currNode1;
+        }
+        else{
+            newNode.next = currNode2;
+        }
+        while(overSum > 0 && newNode.next != null){
+            newNode = newNode.next;
+            nodeVal = newNode.val+overSum;
+            if(overSum > 0)
+                overSum = 0;
+            if(nodeVal >=10){
+                nodeVal %= 10;
+                overSum++;
+            }
+            newNode.val = nodeVal;
+        }
+        
+        
+        if(overSum > 0){//Create a single, final node if the previous sum resolved a number greater than 10.
+            newNode.next = new ListNode(1);
+        }
+        return newListRoot;
+        
+    }
+    
+    private int count(ListNode l){
+        int count = 0;
+        for(; l!= null; l=l.next){
+            ++count;
+        }
+        return count;
+    }
+}
