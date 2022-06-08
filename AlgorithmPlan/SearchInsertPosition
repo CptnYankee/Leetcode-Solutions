@@ -1,0 +1,28 @@
+/*
+Given a sorted array of distinct integers and a target value, 
+return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+*/
+
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        int min = 0;
+        int max = nums.length-1;
+        int pivot = (max-min)/2;
+        
+        if(target > nums[max])
+            return max+1;
+        if(target < nums[min])
+            return min;
+        
+        while(max>min){
+            if(target == nums[pivot])
+                return pivot;
+            if(target < nums[pivot])
+                max = pivot;
+            else
+                min = pivot+1;
+            pivot = (max-min)/2 + min;
+        }
+        return min;
+    }
+}
