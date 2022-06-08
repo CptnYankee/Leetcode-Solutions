@@ -1,0 +1,32 @@
+class Solution {
+    public int search(int[] nums, int target) {
+        if((nums.length) == 2){
+            if(target == nums[0])
+                return 0;
+            if(target == nums[1])
+                return 1;
+            return -1;
+        }
+        int min = 0;
+        int max = nums.length-1;
+        int index= max/2;
+        while(max-min > 1){
+            if(target==nums[index])
+                return index;
+            if(target >= nums[index]){
+              min = index;
+            }else{
+                max = index;
+            }
+            index = ((max-min)/2)+min;
+            if(index == min && min != 0) //some gross adjustment for int division uncertaint
+                index++;
+            else if(index == max && max != nums.length-1)
+                index--;
+            //System.out.println("Min: " + min + " Max: " + max + " Index: " + index);
+        }
+        if(target == nums[index])
+            return index;
+        return -1;
+    }
+}
